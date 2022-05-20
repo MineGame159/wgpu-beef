@@ -1,0 +1,6 @@
+FileVersion = 1
+Dependencies = {corlib = "*", Wgpu = "*", GLFW = "*", Wgpu-Glfw = "*", ImGui = "*", ImGuiImplGlfw = "*", Wgpu-Imgui = "*", stb_beef = "*"}
+
+[Project]
+Name = "Example"
+StartupObject = "Example.Program"

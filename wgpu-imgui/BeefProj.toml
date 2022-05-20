@@ -1,0 +1,7 @@
+FileVersion = 1
+Dependencies = {corlib = "*", ImGui = "*", Wgpu = "*"}
+
+[Project]
+Name = "Wgpu-Imgui"
+TargetType = "BeefLib"
+StartupObject = "Wgpu_Imgui.Program"

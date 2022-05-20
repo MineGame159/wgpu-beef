@@ -1,0 +1,9 @@
+build
+.vscode
+
+generator/.vscode
+generator/bin
+generator/obj
+
+recovery
+BeefSpace_User.toml

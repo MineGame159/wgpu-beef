@@ -1,0 +1,7 @@
+FileVersion = 1
+Dependencies = {corlib = "*", GLFW = "*", Wgpu = "*"}
+
+[Project]
+Name = "Wgpu-Glfw"
+TargetType = "BeefLib"
+StartupObject = "Wgpu_Glfw.Program"

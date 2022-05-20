@@ -1,0 +1,20 @@
+FileVersion = 1
+
+[Project]
+Name = "Wgpu"
+TargetType = "BeefLib"
+StartupObject = "Wgpu.Program"
+
+[Configs.Debug.Win64]
+LibPaths = ["$(ProjectDir)/dist/debug/windows/libwgpu.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/debug/windows/*.dll\")"]
+
+[Configs.Release.Win64]
+LibPaths = ["$(ProjectDir)/dist/release/windows/libwgpu.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/release/windows/*.dll\")"]
+
+[Configs.Debug.Linux64]
+LibPaths = ["$(ProjectDir)/dist/debug/linux/libwgpu.so"]
+
+[Configs.Release.Linux64]
+LibPaths = ["$(ProjectDir)/dist/release/linux/libwgpu.so"]

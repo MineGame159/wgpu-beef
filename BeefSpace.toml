@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {Wgpu = {Path = "."}, Example = {Path = "example"}, GLFW = "*", Wgpu-Glfw = {Path = "wgpu-glfw"}, ImGui = "*", ImGuiImplGlfw = "*", Wgpu-Imgui = {Path = "wgpu-imgui"}, stb_beef = "*"}
+
+[Workspace]
+StartupProject = "Example"
