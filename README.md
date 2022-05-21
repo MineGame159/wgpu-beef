@@ -2,6 +2,9 @@
 **wgpu-beef** is a Beef wrapper library for **WGPU** (more specifically [wgpu-native](https://github.com/gfx-rs/wgpu-native)).  
 You can find an example [here](https://github.com/MineGame15/wgpu-beef/tree/master/Example/Program.bf).
 
+## Dev
+This branch contains bindings generated from [3a6d1d9](https://github.com/gfx-rs/wgpu-native/commit/3a6d1d9a0954973a31160141d71974b2c9deab30). Only Windows are built using this commit, Linux and MacOs native libraries are the same ones as in master branch.
+
 ## Notes
 - The [core bindings](https://github.com/MineGame15/wgpu-beef/tree/master/src/Wgpu.bf) are automatically generated from latest release.
 - Functions are kept as they are but if the function is a method for a struct object handle then a method for that struct is generated too.
