@@ -560,12 +560,14 @@ namespace Wgpu {
 			AdapterExtras = 1610612738,
 			RequiredLimitsExtras = 1610612739,
 			PipelineLayoutExtras = 1610612740,
+			ShaderModuleGLSLDescriptor = 1610612741, // Added
 			Force32 = 2147483647,
 		}
 
-		public enum NativeFeature : c_uint {
+		public enum NativeFeature : c_ulonglong {
 			PUSH_CONSTANTS = 67108864,
 			TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES = 268435456,
+			VERTEX_WRITABLE_STORAGE = 0x1000000000 // Added
 		}
 
 		public enum LogLevel : c_uint {
@@ -1516,6 +1518,44 @@ namespace Wgpu {
 			public this(ChainedStruct chain, c_char* code) {
 				this.chain = chain;
 				this.code = code;
+			}
+		}
+
+		// Added
+		[CRepr]
+		public struct ShaderModuleGLSLDescriptor {
+			public ChainedStruct chain;
+			public ShaderStage stage;
+			public c_char* code;
+			public uint32 defineCount;
+			public ShaderDefine* defines;
+
+			public this() {
+				this = default;
+			}
+
+			public this(ChainedStruct chain, ShaderStage stage, c_char* code, uint32 defineCount, ShaderDefine* defines) {
+				this.chain = chain;
+				this.stage = stage;
+				this.code = code;
+				this.defineCount = defineCount;
+				this.defines = defines;
+			}
+		}
+
+		// Added
+		[CRepr]
+		public struct ShaderDefine {
+			public c_char* name;
+			public c_char* value;
+
+			public this() {
+				this = default;
+			}
+
+			public this(c_char* name, c_char* value) {
+				this.name = name;
+				this.value = value;
 			}
 		}
 
