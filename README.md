@@ -3,7 +3,7 @@
 You can find an example [here](https://github.com/MineGame15/wgpu-beef/tree/master/Example/Program.bf).
 
 ## Dev
-This branch contains bindings generated from [3a6d1d9](https://github.com/gfx-rs/wgpu-native/commit/3a6d1d9a0954973a31160141d71974b2c9deab30). Only Windows are built using this commit, Linux and MacOs native libraries are the same ones as in master branch.
+This branch contains bindings generated from [6d149bf](https://github.com/gfx-rs/wgpu-native/commit/6d149bf3b29c793533cde9ed1dc47c2ba955b324). Only Windows are built using this commit, Linux and MacOs native libraries are the same ones as in master branch.
 
 ## Notes
 - The [core bindings](https://github.com/MineGame15/wgpu-beef/tree/master/src/Wgpu.bf) are automatically generated from latest release.

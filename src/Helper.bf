@@ -39,6 +39,23 @@ namespace Wgpu {
 			public BufferUsage usage;
 		}
 
+		[CRepr]
+		public struct IndirectCommand {
+			public uint32 vertexCount;
+			public uint32 instanceCount;
+			public uint32 baseVertex;
+			public uint32 baseInstance;
+		}
+
+		[CRepr]
+		public struct IndexedIndirectCommand {
+			public uint32 vertexCount;
+			public uint32 instanceCount;
+			public uint32 baseIndex;
+			public uint32 vertexOffset;
+			public uint32 baseInstance;
+		}
+
 		/// Creates a Buffer with data to initialize it.
 		public static Buffer DeviceCreateBufferInit(Device device, BufferInitDescriptor* descriptor) {
 			if (descriptor.contents.IsEmpty) {

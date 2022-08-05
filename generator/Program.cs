@@ -43,47 +43,50 @@ namespace Generator {
 
         static async Task Run() {
             string version = "0.12.0.1";
+            bool local = true;
 
             // Download native libraries
             string zip1Path = null;
             ZipArchive zip1 = null;
 
-            using (var client = new HttpClient()) {
-                foreach (var (platform, extension) in PLATFORMS) {
-                    foreach (string build in BUILDS) {
-                        string tempPath = Path.GetTempFileName();
-                        string outPath = $"../dist/{build}/{platform}/";
+            if (!local) {
+                using (var client = new HttpClient()) {
+                    foreach (var (platform, extension) in PLATFORMS) {
+                        foreach (string build in BUILDS) {
+                            string tempPath = Path.GetTempFileName();
+                            string outPath = $"../dist/{build}/{platform}/";
 
-                        Directory.CreateDirectory(outPath);
+                            Directory.CreateDirectory(outPath);
 
-                        using (var stream = await client.GetStreamAsync($"https://github.com/gfx-rs/wgpu-native/releases/download/v{version}/wgpu-{platform}-x86_64-{build}.zip")) {
-                            using (var file = new FileStream(tempPath, FileMode.Create)) {
-                                await stream.CopyToAsync(file);
+                            using (var stream = await client.GetStreamAsync($"https://github.com/gfx-rs/wgpu-native/releases/download/v{version}/wgpu-{platform}-x86_64-{build}.zip")) {
+                                using (var file = new FileStream(tempPath, FileMode.Create)) {
+                                    await stream.CopyToAsync(file);
+                                }
                             }
-                        }
 
-                        ZipArchive zip = ZipFile.OpenRead(tempPath);
+                            ZipArchive zip = ZipFile.OpenRead(tempPath);
 
-                        string outFile = outPath + (platform == "windows" ? "wgpu_native" : "libwgpu") + "." + extension;
-                        zip.GetEntry("libwgpu." + extension).ExtractToFile(outFile, true);
+                            string outFile = outPath + (platform == "windows" ? "wgpu_native" : "libwgpu") + "." + extension;
+                            zip.GetEntry("libwgpu." + extension).ExtractToFile(outFile, true);
 
-                        if (platform == "windows") zip.GetEntry("libwgpu.lib").ExtractToFile(outPath + "libwgpu.lib", true);
+                            if (platform == "windows") zip.GetEntry("libwgpu.lib").ExtractToFile(outPath + "libwgpu.lib", true);
 
-                        if (platform == "windows" && build == "release") {
-                            zip1Path = tempPath;
-                            zip1 = zip;
-                        }
-                        else {
-                            zip.Dispose();
-                            File.Delete(tempPath);
+                            if (platform == "windows" && build == "release") {
+                                zip1Path = tempPath;
+                                zip1 = zip;
+                            }
+                            else {
+                                zip.Dispose();
+                                File.Delete(tempPath);
+                            }
                         }
                     }
                 }
-            }
 
-            // Extract header files
-            zip1.GetEntry("wgpu.h").ExtractToFile("wgpu.h", true);
-            zip1.GetEntry("webgpu.h").ExtractToFile("webgpu.h", true);
+                // Extract header files
+                zip1.GetEntry("wgpu.h").ExtractToFile("wgpu.h", true);
+                zip1.GetEntry("webgpu.h").ExtractToFile("webgpu.h", true);
+            }
 
             // Parse headers
             CppCompilation a = CppParser.ParseFile("wgpu.h");
@@ -176,11 +179,13 @@ namespace Generator {
             }
 
             // Delete headers and temp zip
-            File.Delete("wgpu.h");
-            File.Delete("webgpu.h");
+            if (!local) {
+                File.Delete("wgpu.h");
+                File.Delete("webgpu.h");
 
-            zip1.Dispose();
-            File.Delete(zip1Path);
+                zip1.Dispose();
+                File.Delete(zip1Path);
+            }
         }
 
         static void GenerateEnum(StreamWriter w, CppEnum e) {
@@ -188,6 +193,8 @@ namespace Generator {
 
             foreach (CppEnumItem item in e.Items) {
                 string name = item.Name.Substring(item.Name.IndexOf('_') + 1);
+                if (name == "Force32") continue;
+
                 if (char.IsDigit(name[0])) name = "_" + name;
 
                 w.WriteLine("\t\t\t" + name + " = " + item.Value + ",");
