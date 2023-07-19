@@ -3,7 +3,7 @@
 You can find an example [here](https://github.com/MineGame159/wgpu-beef/blob/master/example/src/Program.bf).
 
 ## Notes
-- The [core bindings](https://github.com/MineGame15/wgpu-beef/tree/master/src/Wgpu.bf) are automatically generated from latest release.
+- The [core bindings](https://github.com/MineGame159/wgpu-beef/blob/master/src/Wgpu.bf) are automatically generated from latest release.
 - Functions are kept as they are but if the function is a method for a struct object handle then a method for that struct is generated too.
 - All structs have a default empty constructor (allowing for `.() {}` syntax) and a constructor with all fields.
 - There are a few helper functions ported from wgpu-rs (see [Helper.bf](https://github.com/MineGame159/wgpu-beef/blob/master/src/Wgpu.bf)). Pull requests for these helper functions are welcome.
